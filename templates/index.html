@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StayNGo - Login & Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Welcome to StayNGo</h1>
+
+        <!-- Flash Messages for User Feedback -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <!-- Login Form -->
+        <div class="form-wrapper">
+            <form action="/login" method="post" class="form">
+                <h2>Login</h2>
+                <label for="email">Email:</label>
+                <input type="email" name="email" placeholder="Enter your email" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+                
+                <label for="role">Role:</label>
+                <select name="role" required>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                
+                <button type="submit" class="button">Login</button>
+            </form>
+        </div>
+        
+        <!-- Registration Form -->
+        <div class="form-wrapper">
+            <form action="/register" method="post" class="form">
+                <h2>Register</h2>
+                <label for="name">Name:</label>
+                <input type="text" name="name" placeholder="Enter your name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" name="email" placeholder="Enter your email" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+                
+                <label for="role">Role:</label>
+                <select name="role" required>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" name="phone_number" placeholder="Enter your phone number" required>
+                
+                <button type="submit" class="button">Register</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

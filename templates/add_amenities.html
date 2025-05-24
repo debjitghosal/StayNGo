@@ -1,0 +1,48 @@
+<!-- add_amenities.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Amenities - StayNGo</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Add Amenities</h1>
+      <p>Add amenities for Property ID: {{ property_id }}</p>
+
+      <form
+        action="{{ url_for('add_amenities', property_id=property_id) }}"
+        method="POST"
+        class="property-form"
+      >
+        <label for="amenity_name">Amenity Name:</label>
+        <input
+          type="text"
+          name="amenity_name"
+          id="amenity_name"
+          placeholder="Enter amenity name"
+          required
+        />
+
+        <label for="amenity_description">Description:</label>
+        <textarea
+          name="amenity_description"
+          id="amenity_description"
+          placeholder="Enter amenity description"
+          rows="3"
+        ></textarea>
+
+        <button type="submit" class="button submit-button">Add Amenity</button>
+      </form>
+
+      <a href="{{ url_for('dashboard') }}" class="button cancel-button"
+        >Finish and Go to Dashboard</a
+      >
+    </div>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Property Details - StayNGo</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Property Details - {{ property.property_name }}</h1>
+      <p>
+        <strong>Address:</strong> {{ property.address }}, {{ property.city }},
+        {{ property.state }}, {{ property.country }}
+      </p>
+      
+      <p><strong>Description:</strong> {{ property.description }}</p>
+      <p><a href="{{ property.image_url }}" target="_blank">View Image</a></p>
+
+      <h2>Amenities</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Amenity Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for amenity in amenities %}
+          <tr>
+            <td>{{ amenity.name }}</td>
+            <td>{{ amenity.description }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h2>Rooms</h2>
+      {% for room in rooms %}
+      <div class="room-section">
+        <h3>{{ room.room_type }}</h3>
+        <p><strong>Capacity:</strong> {{ room.capacity }}</p>
+        <p><strong>Price per Night:</strong> ₹{{ room.price_per_night }}</p>
+        <p>
+          <strong>Availability:</strong> {{ 'Available' if
+          room.availability_status else 'Unavailable' }}
+        </p>
+
+        <p>
+          {% if room.availability_status %}
+          <a
+            href="{{ url_for('book_room', room_id=room.room_id, property_id=property.property_id) }}"
+            class="button"
+            >Book Now</a
+          >
+          {% else %}
+          <span>Not Available</span>
+          {% endif %}
+        </p>
+        <!-- Reviews for the current room -->
+        <h4>Reviews</h4>
+        <div class="reviews-section">
+          {% if room_reviews[room.room_id] %}
+          <ul>
+            {% for review in room_reviews[room.room_id] %}
+            <li>
+              <strong>{{ review.user_name }}:</strong>
+              <p>{{ review.comment }}</p>
+              <p>
+                <em>Rating: {{ review.rating }} out of 5</em> | {{
+                review.created_at.strftime('%Y-%m-%d') }}
+              </p>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>No reviews available for this room.</p>
+          {% endif %}
+        </div>
+
+        <!-- Form to Add a New Review for the Current Room -->
+        <h4>Add Your Review</h4>
+        <form
+          action="{{ url_for('add_review', room_id=room.room_id) }}"
+          method="POST"
+        >
+          <input
+            type="hidden"
+            name="property_id"
+            value="{{ property.property_id }}"
+          />
+          <label for="rating">Rating (1-5):</label>
+          <select name="rating" id="rating" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <label for="comment">Comment:</label>
+          <textarea name="comment" id="comment" rows="4" required></textarea>
+          <button type="submit" class="button">Submit Review</button>
+        </form>
+      </div>
+      {% endfor %}
+
+      <a href="{{ url_for('user_dashboard') }}" class="button back-button"
+        >Back to Dashboard</a
+      >
+    </div>
+  </body>
+</html>

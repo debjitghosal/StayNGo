@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard - StayNGo</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to StayNGo, {{ name }}!</h1>
+      <p>Available Properties</p>
+
+      <!-- Button to view current bookings -->
+      <a href="{{ url_for('my_bookings') }}" class="button view-bookings"
+        >View My Bookings</a
+      >
+
+      <table>
+        <thead>
+          <tr>
+            <th>Property ID</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Country</th>
+            
+            <th>Description</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for property in properties %}
+          <tr>
+            <td>{{ property.property_id }}</td>
+            <td>{{ property.address }}</td>
+            <td>{{ property.city }}</td>
+            <td>{{ property.state }}</td>
+            <td>{{ property.country }}</td>
+           
+            <td>{{ property.description }}</td>
+            <td>
+              <a href="{{ property.image_url }}" target="_blank">View Image</a>
+            </td>
+            <td>
+              <a
+                href="{{ url_for('view_more', property_id=property.property_id) }}"
+                class="button view-more"
+                >View More</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <a href="{{ url_for('logout') }}" class="button logout">Logout</a>
+    </div>
+  </body>
+</html>

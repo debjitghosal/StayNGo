@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Amenity - StayNGo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Edit Amenity</h1>
+        
+        <form action="{{ url_for('edit_amenity', amenity_id=amenity['amenity_id']) }}" method="POST" class="property-form">
+            <label for="amenity_name">Amenity Name:</label>
+            <input type="text" name="amenity_name" value="{{ amenity['name'] }}" required>
+            
+            <label for="amenity_description">Description:</label>
+            <textarea name="amenity_description" rows="3">{{ amenity['description'] }}</textarea>
+            
+            <button type="submit" class="button submit-button">Update Amenity</button>
+        </form>
+
+        <a href="{{ url_for('view_amenities', property_id=amenity['property_id']) }}" class="button cancel-button">Cancel</a>
+    </div>
+</body>
+</html>

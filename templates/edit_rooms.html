@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Room - StayNGo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Room - Room ID: {{ room.room_id }}</h1>
+        <form action="{{ url_for('edit_room', room_id=room.room_id) }}" method="POST">
+            <label for="room_type">Room Type:</label>
+            <input type="text" name="room_type" value="{{ room.room_type }}" required>
+            
+            <label for="capacity">Capacity:</label>
+            <input type="number" name="capacity" value="{{ room.capacity }}" required>
+            
+            <label for="price_per_night">Price per Night:</label>
+            <input type="number" name="price_per_night" step="0.01" value="{{ room.price_per_night }}" required>
+            
+            <label for="availability_status">Availability:</label>
+            <input type="checkbox" name="availability_status" {% if room.availability_status %}checked{% endif %}>
+            
+            <button type="submit" class="button">Update Room</button>
+        </form>
+        <a href="{{ url_for('dashboard') }}" class="button cancel-button">Cancel</a>
+    </div>
+    
+</body>
+</html>

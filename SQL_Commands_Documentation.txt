@@ -1,0 +1,330 @@
+# SQL Commands Documentation - Stay N Go Application
+
+This document contains all SQL commands used in the Stay N Go Flask application (`app.py`). The commands are organized by functionality for easy reference.
+
+## Database Connection
+The application connects to a MySQL database named `stay_n_go` using the following configuration:
+- **Host**: localhost
+- **Database**: stay_n_go
+- **User**: root
+- **Password**: MayankRaylite
+
+## Table Structure Overview
+Based on the SQL queries, the application uses the following main tables:
+- `USERS` - User account information
+- `PROPERTIES` - Property listings
+- `ROOMS` - Room details for each property
+- `AMENITIES` - Property amenities
+- `BOOKINGS` - Booking records
+- `PAYMENTS` - Payment transactions
+- `REVIEWS` - Room reviews and ratings
+
+---
+
+## SQL Commands by Functionality
+
+### 1. Room Availability Management
+
+#### Update Room Availability (Automated Scheduler)
+```sql
+-- Select expired bookings
+SELECT room_id 
+FROM BOOKINGS 
+WHERE check_out_date <= %s
+
+-- Update room availability to available
+UPDATE ROOMS 
+SET availability_status = 1 
+WHERE room_id = %s
+```
+
+### 2. User Management
+
+#### User Registration
+```sql
+INSERT INTO USERS (name, email, password, role, phone_number) 
+VALUES (%s, %s, %s, %s, %s)
+```
+
+#### User Login Authentication
+```sql
+SELECT * FROM USERS 
+WHERE email=%s AND role=%s
+```
+
+### 3. Property Management
+
+#### Fetch Admin's Properties
+```sql
+SELECT * FROM PROPERTIES 
+WHERE owner_id = %s
+```
+
+#### Fetch All Properties (User Dashboard)
+```sql
+SELECT * FROM PROPERTIES
+```
+
+#### Add New Property
+```sql
+INSERT INTO PROPERTIES 
+(owner_id, address, city, state, country, description, image_url, image_description)
+VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+```
+
+#### Update Property Details
+```sql
+UPDATE PROPERTIES 
+SET address = %s, city = %s, state = %s, country = %s, 
+    description = %s, image_url = %s, image_description = %s
+WHERE property_id = %s AND owner_id = %s
+```
+
+#### Delete Property and Associated Data
+```sql
+-- Delete associated rooms
+DELETE FROM ROOMS 
+WHERE property_id = %s
+
+-- Delete associated amenities
+DELETE FROM AMENITIES 
+WHERE property_id = %s
+
+-- Delete the property
+DELETE FROM PROPERTIES 
+WHERE property_id = %s AND owner_id = %s
+```
+
+#### Fetch Single Property Details
+```sql
+SELECT * FROM PROPERTIES 
+WHERE property_id = %s
+```
+
+### 4. Room Management
+
+#### Fetch Room Details
+```sql
+SELECT * FROM ROOMS 
+WHERE room_id = %s
+```
+
+#### Fetch All Rooms for Property
+```sql
+SELECT * FROM ROOMS 
+WHERE property_id = %s
+```
+
+#### Add New Room
+```sql
+INSERT INTO ROOMS 
+(property_id, room_type, capacity, price_per_night, availability_status)
+VALUES (%s, %s, %s, %s, %s)
+```
+
+#### Update Room Details
+```sql
+UPDATE ROOMS 
+SET room_type = %s, capacity = %s, price_per_night = %s, availability_status = %s
+WHERE room_id = %s
+```
+
+#### Delete Room
+```sql
+DELETE FROM ROOMS 
+WHERE room_id = %s
+```
+
+#### Update Room Availability Status
+```sql
+-- Set room as unavailable (during booking)
+UPDATE ROOMS
+SET availability_status = 0
+WHERE room_id = %s
+
+-- Set room as available (during cancellation)
+UPDATE ROOMS 
+SET availability_status = 1 
+WHERE room_id = %s
+```
+
+#### Room Status Report (Admin)
+```sql
+SELECT r.room_id, r.room_type, r.capacity, r.price_per_night,
+       CASE WHEN b.booking_id IS NOT NULL THEN 1 ELSE 0 END AS is_booked
+FROM ROOMS r
+LEFT JOIN BOOKINGS b ON r.room_id = b.room_id AND b.check_out_date >= CURDATE()
+WHERE r.property_id = %s
+```
+
+### 5. Amenities Management
+
+#### Fetch Property Amenities
+```sql
+SELECT * FROM AMENITIES 
+WHERE property_id = %s
+```
+
+#### Add New Amenity
+```sql
+INSERT INTO AMENITIES (property_id, name, description)
+VALUES (%s, %s, %s)
+```
+
+#### Update Amenity
+```sql
+UPDATE AMENITIES 
+SET name = %s, description = %s
+WHERE amenity_id = %s
+```
+
+#### Delete Amenity
+```sql
+DELETE FROM AMENITIES 
+WHERE amenity_id = %s
+```
+
+#### Fetch Single Amenity
+```sql
+SELECT * FROM AMENITIES 
+WHERE amenity_id = %s
+```
+
+### 6. Booking Management
+
+#### Create New Booking
+```sql
+INSERT INTO BOOKINGS (user_id, room_id, check_in_date, check_out_date, total_price, created_at, updated_at)
+VALUES (%s, %s, %s, %s, %s, NOW(), NOW())
+```
+
+#### Fetch User's Bookings
+```sql
+SELECT b.booking_id, b.check_in_date, b.check_out_date, b.total_price, r.room_type, p.address 
+FROM BOOKINGS b
+JOIN ROOMS r ON b.room_id = r.room_id
+JOIN PROPERTIES p ON r.property_id = p.property_id
+WHERE b.user_id = %s
+```
+
+#### Fetch Booking Details for Cancellation
+```sql
+SELECT * FROM BOOKINGS 
+WHERE booking_id = %s AND user_id = %s
+```
+
+#### Cancel Booking
+```sql
+DELETE FROM BOOKINGS 
+WHERE booking_id = %s
+```
+
+### 7. Payment Management
+
+#### Record Payment
+```sql
+INSERT INTO PAYMENTS (booking_id, payment_method, amount, payment_status, payment_date)
+VALUES (%s, %s, %s, 'completed', NOW())
+```
+
+#### Delete Payment (during booking cancellation)
+```sql
+DELETE FROM PAYMENTS 
+WHERE booking_id = %s
+```
+
+### 8. Reviews Management
+
+#### Fetch Room Reviews
+```sql
+SELECT r.rating, r.comment, u.name AS user_name, r.created_at
+FROM REVIEWS r
+JOIN USERS u ON r.user_id = u.user_id
+WHERE r.room_id = %s
+ORDER BY r.created_at DESC
+```
+
+#### Add New Review
+```sql
+INSERT INTO REVIEWS (room_id, user_id, rating, comment, created_at, updated_at)
+VALUES (%s, %s, %s, %s, %s, %s)
+```
+
+---
+
+## Database Functions Used
+
+### MySQL Built-in Functions
+- `NOW()` - Current timestamp
+- `CURDATE()` - Current date
+- `CASE WHEN ... THEN ... ELSE ... END` - Conditional logic
+
+### Cursor Methods
+- `cursor.fetchone()` - Fetch single record
+- `cursor.fetchall()` - Fetch all records
+- `cursor.lastrowid` - Get last inserted row ID
+- `cursor.rowcount` - Get number of affected rows
+
+### Transaction Management
+- `conn.commit()` - Commit transaction
+- `conn.rollback()` - Rollback transaction
+- `conn.start_transaction()` - Start explicit transaction
+
+---
+
+## Query Patterns and Best Practices
+
+### Parameterized Queries
+All queries use parameterized statements with `%s` placeholders to prevent SQL injection:
+```sql
+cursor.execute("SELECT * FROM USERS WHERE email=%s AND role=%s", (email, role))
+```
+
+### JOIN Operations
+The application uses various JOIN types:
+- **INNER JOIN**: For fetching related data (bookings with rooms and properties)
+- **LEFT JOIN**: For optional relationships (rooms with bookings for status check)
+
+### Transaction Handling
+Critical operations like booking creation use transactions:
+1. Insert booking record
+2. Insert payment record
+3. Update room availability
+4. Commit all changes or rollback on error
+
+### Error Handling
+All database operations include proper error handling:
+```python
+try:
+    # Database operations
+    conn.commit()
+except mysql.connector.Error as err:
+    conn.rollback()
+    flash(f"Error: {err}")
+finally:
+    conn.close()
+```
+
+---
+
+## Security Considerations
+
+1. **Parameterized Queries**: All user inputs are properly parameterized
+2. **Password Hashing**: User passwords are hashed using Werkzeug security
+3. **Session Management**: User sessions are properly managed
+4. **Role-based Access**: Admin and user roles have different access levels
+5. **Authorization Checks**: Owner verification for property operations
+
+---
+
+## Database Schema Relationships
+
+Based on the SQL queries, the main relationships are:
+- USERS → PROPERTIES (one-to-many via owner_id)
+- PROPERTIES → ROOMS (one-to-many via property_id)
+- PROPERTIES → AMENITIES (one-to-many via property_id)
+- USERS → BOOKINGS (one-to-many via user_id)
+- ROOMS → BOOKINGS (one-to-many via room_id)
+- BOOKINGS → PAYMENTS (one-to-one via booking_id)
+- ROOMS → REVIEWS (one-to-many via room_id)
+- USERS → REVIEWS (one-to-many via user_id)

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Room - StayNGo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add Room to Property ID: {{ property_id }}</h1>
+        <form action="{{ url_for('add_room', property_id=property_id) }}" method="POST">
+            <label for="room_type">Room Type:</label>
+            <input type="text" name="room_type" required>
+            
+            <label for="capacity">Capacity:</label>
+            <input type="number" name="capacity" required>
+            
+            <label for="price_per_night">Price per Night:</label>
+            <input type="number" name="price_per_night" step="0.01" required>
+            
+            <label for="availability_status">Availability:</label>
+            <input type="checkbox" name="availability_status">
+            
+            <button type="submit" class="button">Add Room</button>
+        </form>
+        <a href="{{ url_for('dashboard') }}" class="button cancel-button"
+        >Finish and Go to Dashboard</a
+      >
+    </div>
+</body>
+</html>

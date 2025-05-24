@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Status - StayNGo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Room Status for Property: {{ property.address }}, {{ property.city }}</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Room ID</th>
+                    <th>Room Type</th>
+                    <th>Capacity</th>
+                    <th>Price per Night</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
+                <tr>
+                    <td>{{ room.room_id }}</td>
+                    <td>{{ room.room_type }}</td>
+                    <td>{{ room.capacity }}</td>
+                    <td>₹{{ room.price_per_night }}</td>
+                    <td>
+                        {% if room.is_booked %}
+                            <span class="status booked">Booked</span>
+                        {% else %}
+                            <span class="status available">Available</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('dashboard') }}" class="button back-button">Back to Dashboard</a>
+    </div>
+
+    <style>
+        .status.booked {
+            color: red;
+            font-weight: bold;
+        }
+        .status.available {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</body>
+</html>
