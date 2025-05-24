@@ -1,23 +1,28 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from dotenv import load_dotenv
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import timedelta,datetime
+from datetime import timedelta, datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 
+# Load environment variables
+load_dotenv()
+
 app = Flask(__name__)
-app.secret_key = "your_secret_key"  # Replace with a secure, randomly generated key
+app.secret_key = os.getenv("SECRET_KEY")
 app.permanent_session_lifetime = timedelta(minutes=10)
 
 # Database connection function
 def create_connection():
     """Establishes a connection to the MySQL database."""
     return mysql.connector.connect(
-        host="localhost",
-        database="stay_n_go",
-        user="root",
-        password="MayankRaylite"  # Replace with actual database password
+        host=os.getenv("DB_HOST"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD")
     )
-    
+
 # Function to check for completed bookings and update room availability
 def update_room_availability():
     """Checks for bookings that have reached their check-out date and updates the room availability."""

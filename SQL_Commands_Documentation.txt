@@ -2,13 +2,6 @@
 
 This document contains all SQL commands used in the Stay N Go Flask application (`app.py`). The commands are organized by functionality for easy reference.
 
-## Database Connection
-The application connects to a MySQL database named `stay_n_go` using the following configuration:
-- **Host**: localhost
-- **Database**: stay_n_go
-- **User**: root
-- **Password**: MayankRaylite
-
 ## Table Structure Overview
 Based on the SQL queries, the application uses the following main tables:
 - `USERS` - User account information
