@@ -34,7 +34,7 @@ Our database stores comprehensive information on rental properties, including:
 - **Amenities:** Details about available facilities (e.g., kitchen, Wi-Fi, laundry).
 
 Users can quickly **filter accommodations** based on their budget, desired distance from medical centers, or specific amenity requirements, making the search process efficient and tailored to their needs.
-<img width="975" height="206" alt="image" src="https://github.com/user-attachments/assets/467c0665-d951-4d43-a0cf-844930905c5c" />
+<img width="975" height="544" alt="image" src="https://github.com/user-attachments/assets/08961dd3-0bd2-4f28-8453-3ffabea00582" />
 
 ### Side-by-Side Comparisons
 
