@@ -28,6 +28,7 @@ StayNGo leverages a robust **Database Management System (DBMS)** to connect user
 - **Affordability:** Providing cost-effective alternatives to traditional hotels.
 - **Proximity:** Helping users find lodging close to hospitals and other critical locations.
 - **Ease of Use:** Simplifying the search and booking process through efficient data management.
+<img width="975" height="206" alt="image" src="https://github.com/user-attachments/assets/3bfcc25e-c18b-4de9-ae9d-9df23a3be00a" />
 
 ---
 
@@ -42,6 +43,7 @@ Our database stores comprehensive information on rental properties, including:
 - **Amenities:** Details about available facilities (e.g., kitchen, Wi-Fi, laundry).
 
 Users can quickly **filter accommodations** based on their budget, desired distance from medical centers, or specific amenity requirements, making the search process efficient and tailored to their needs.
+<img width="975" height="206" alt="image" src="https://github.com/user-attachments/assets/467c0665-d951-4d43-a0cf-844930905c5c" />
 
 ### Side-by-Side Comparisons
 
@@ -65,9 +67,12 @@ StayNGo is built with **scalability** in mind. The platform can efficiently hand
 
 ## Technology Stack
 
-- **Frontend:** HTML templates rendered by Flask
-- **Backend:** Flask (Python)
-- **Database:** MySQL
+- **Frontend:** HTML templates rendered by Flask (Python), optionally styled with Bootstrap/Tailwind CSS  
+- **Backend:** Flask (Python), REST APIs for data access  
+- **Database:** MySQL (for relational data storage)  
+- **Storage/Big Data:** HDFS (Hadoop Distributed File System) for storing large datasets  
+- **Version Control:** Git
+<img width="975" height="731" alt="image" src="https://github.com/user-attachments/assets/5beb2026-6c66-4c80-939c-daef40fd28e5" />
 
 ---
 
