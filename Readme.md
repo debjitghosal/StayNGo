@@ -1,4 +1,4 @@
-<img width="975" height="731" alt="image" src="https://github.com/user-attachments/assets/ba511720-341f-4f0f-a746-53d89bc0fb48" />Commands to run: 
+Commands to run: 
 Command prompt:
 start-dfs.cmd
 start-yarn.cmd
@@ -26,7 +26,6 @@ StayNGo leverages a robust **Database Management System (DBMS)** to connect user
 - **Affordability:** Providing cost-effective alternatives to traditional hotels.
 - **Proximity:** Helping users find lodging close to hospitals and other critical locations.
 - **Ease of Use:** Simplifying the search and booking process through efficient data management.
-<img width="975" height="731" alt="image" src="https://github.com/user-attachments/assets/702ccd86-78bd-40a1-835d-634aa14e18f0" />
 
 ---
 
