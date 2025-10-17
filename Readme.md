@@ -11,6 +11,8 @@ python app.py
 
 StayNGo is a web-based platform designed to address the challenges faced by middle-class and lower-income individuals in accessing affordable temporary lodging, especially when seeking medical care in distant cities. Inspired by the long waiting periods at renowned hospitals like Tata, StayNGo aims to provide a centralized solution for finding budget-friendly accommodations near essential services.
 
+<img width="975" height="477" alt="image" src="https://github.com/user-attachments/assets/b1cab99c-68df-42ff-8142-032ac3c58ff2" />
+
 ---
 
 ## The Problem
