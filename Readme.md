@@ -1,12 +1,3 @@
-Commands to run: 
-Command prompt:
-start-dfs.cmd
-start-yarn.cmd
-jps
-
-VS code ot Terminal
-python app.py
-
 # StayNGo
 
 StayNGo is a web-based platform designed to address the challenges faced by middle-class and lower-income individuals in accessing affordable temporary lodging, especially when seeking medical care in distant cities. Inspired by the long waiting periods at renowned hospitals like Tata, StayNGo aims to provide a centralized solution for finding budget-friendly accommodations near essential services.
@@ -179,3 +170,14 @@ CREATE TABLE REVIEWS (
     FOREIGN KEY (user_id) REFERENCES USERS(user_id) ON DELETE CASCADE
 );
 ```
+
+Commands to run: 
+Command prompt:
+start-dfs.cmd
+start-yarn.cmd
+jps
+
+VS code ot Terminal
+python app.py
+
+
