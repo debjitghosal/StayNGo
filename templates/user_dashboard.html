@@ -27,7 +27,7 @@
             <th>City</th>
             <th>State</th>
             <th>Country</th>
-            
+
             <th>Description</th>
             <th>Image</th>
             <th>Actions</th>
@@ -41,10 +41,18 @@
             <td>{{ property.city }}</td>
             <td>{{ property.state }}</td>
             <td>{{ property.country }}</td>
-           
+
             <td>{{ property.description }}</td>
             <td>
-              <a href="{{ property.image_url }}" target="_blank">View Image</a>
+              <!-- Display image from HDFS using embedded <img> with fallback to link -->
+              {% if property.image_url %}
+              <img
+                src="{{ url_for('hdfs_image_proxy', hdfs_path=property.image_url) }}"
+                alt="Property Image"
+                width="100"
+                height="80"
+              />
+              {% else %} No Image {% endif %}
             </td>
             <td>
               <a

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StayNGo - Compassionate Lodging for Medical Journeys</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <style>
+      /* Custom styles for the landing page layout */
+      body {
+        display: block;
+        background: #f7fdf8;
+        padding: 0;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        position: fixed; /* Makes header sticky */
+        top: 0;
+        left: 0;
+        z-index: 1000;
+      }
+
+      main {
+        padding-top: 80px; /* Prevents content from hiding behind sticky header */
+      }
+
+      .header .logo {
+        font-size: 28px;
+        font-weight: 800;
+        color: #43a047;
+      }
+
+      .header .button {
+        width: auto;
+      }
+
+      /* --- UPDATED HERO SECTION --- */
+      .hero {
+        position: relative; /* Needed for the overlay */
+        text-align: center;
+        padding: 120px 40px;
+        color: #ffffff; /* Text color changed to white for better contrast */
+        /* Background image */
+        background-image: url("https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+      }
+
+      /* Semi-transparent overlay for text readability */
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(67, 160, 71, 0.7),
+          /* Darker green tint */ rgba(30, 136, 229, 0.6)
+            /* Calming blue tint */
+        );
+        z-index: 1;
+      }
+
+      /* Ensure text is above the overlay */
+      .hero h1,
+      .hero p {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero h1 {
+        font-size: 52px;
+        font-weight: 800;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      }
+
+      .hero p {
+        font-size: 22px;
+        max-width: 700px;
+        margin: 0 auto;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      /* --- END OF HERO SECTION UPDATE --- */
+
+      .content-section {
+        padding: 80px 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .content-section h2 {
+        font-size: 36px;
+        color: #333;
+        margin-bottom: 40px;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        text-align: left;
+      }
+
+      .feature-card {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+      }
+
+      .feature-card h3 {
+        font-size: 22px;
+        color: #43a047;
+        margin-bottom: 15px;
+      }
+
+      .feature-card p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #666;
+      }
+
+      /* --- NEW FOOTER STYLES --- */
+      .footer {
+        background-color: #333;
+        color: #f4f4f4;
+        text-align: center;
+        padding: 30px 20px;
+        margin-top: 60px;
+      }
+
+      .footer p {
+        margin: 0;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">StayNGo</div>
+      <a href="{{ url_for('auth') }}" class="button">Login / Register</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>A Place to Rest, A Partner in Care.</h1>
+        <p>
+          StayNGo offers safe, affordable, and comfortable lodging for patients
+          and their families, so you can focus on what truly matters—health and
+          recovery.
+        </p>
+      </section>
+
+      <section class="content-section">
+        <h2>Our Simple Process</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>1. Find a Stay</h3>
+            <p>
+              Easily search for vetted, budget-friendly rooms and properties
+              located conveniently near major hospitals and medical centers.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>2. Book with Confidence</h3>
+            <p>
+              Securely book your stay for the duration you need. Our transparent
+              process ensures there are no hidden costs or surprises.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>3. Rest and Recover</h3>
+            <p>
+              Settle into a comfortable space designed for peace and quiet,
+              allowing you to be close to your loved ones during their
+              treatment.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 StayNGo. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>

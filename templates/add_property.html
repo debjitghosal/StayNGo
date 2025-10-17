@@ -1,44 +1,74 @@
 <!-- add_property.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add New Property - StayNGo</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
     <div class="container">
-        <h1 class="title">Add New Property</h1>
-        
-        <form action="{{ url_for('add_property') }}" method="POST" class="property-form">
-            <label for="address">Address:</label>
-            <input type="text" name="address" placeholder="Enter property address" required>
-            
-            <label for="city">City:</label>
-            <input type="text" name="city" placeholder="Enter city" required>
-            
-            <label for="state">State:</label>
-            <input type="text" name="state" placeholder="Enter state" required>
-            
-            <label for="country">Country:</label>
-            <input type="text" name="country" placeholder="Enter country" required>
-            
-           
-            
-            <label for="description">Description:</label>
-            <textarea name="description" placeholder="Enter property description" rows="3" required></textarea>
-            
-            <label for="image_url">Image URL:</label>
-            <input type="text" name="image_url" placeholder="Enter image URL" required>
-            
-            <label for="image_description">Image Description:</label>
-            <input type="text" name="image_description" placeholder="Enter image description" required>
-            
-            <button type="submit" class="button submit-button">Add Property</button>
-        </form>
+      <h1 class="title">Add New Property</h1>
 
-        <a href="{{ url_for('dashboard') }}" class="button cancel-button">Cancel</a>
+      <!-- Changed form enctype to allow file upload -->
+      <form
+        action="{{ url_for('add_property') }}"
+        method="POST"
+        class="property-form"
+        enctype="multipart/form-data"
+      >
+        <label for="address">Address:</label>
+        <input
+          type="text"
+          name="address"
+          placeholder="Enter property address"
+          required
+        />
+
+        <label for="city">City:</label>
+        <input type="text" name="city" placeholder="Enter city" required />
+
+        <label for="state">State:</label>
+        <input type="text" name="state" placeholder="Enter state" required />
+
+        <label for="country">Country:</label>
+        <input
+          type="text"
+          name="country"
+          placeholder="Enter country"
+          required
+        />
+
+        <label for="description">Description:</label>
+        <textarea
+          name="description"
+          placeholder="Enter property description"
+          rows="3"
+          required
+        ></textarea>
+
+        <!-- Replace Image URL input with file input for image upload -->
+        <label for="image_file">Upload Image:</label>
+        <input type="file" name="image_file" accept="image/*" required />
+
+        <label for="image_description">Image Description:</label>
+        <input
+          type="text"
+          name="image_description"
+          placeholder="Enter image description"
+          required
+        />
+
+        <button type="submit" class="button submit-button">Add Property</button>
+      </form>
+
+      <a href="{{ url_for('dashboard') }}" class="button cancel-button"
+        >Cancel</a
+      >
     </div>
-</body>
+  </body>
 </html>

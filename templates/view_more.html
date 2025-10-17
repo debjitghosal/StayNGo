@@ -16,9 +16,26 @@
         <strong>Address:</strong> {{ property.address }}, {{ property.city }},
         {{ property.state }}, {{ property.country }}
       </p>
-      
+
       <p><strong>Description:</strong> {{ property.description }}</p>
-      <p><a href="{{ property.image_url }}" target="_blank">View Image</a></p>
+
+      <!-- Changed from simple link to image preview through HDFS proxy -->
+      <p>
+        {% if property.image_url %}
+        <img
+          src="{{ url_for('hdfs_image_proxy', hdfs_path=property.image_url) }}"
+          alt="Property Image"
+          width="300"
+          style="object-fit: cover"
+        />
+        <br />
+        <a
+          href="{{ url_for('hdfs_image_proxy', hdfs_path=property.image_url) }}"
+          target="_blank"
+          >View Full Image</a
+        >
+        {% else %} No Image Available {% endif %}
+      </p>
 
       <h2>Amenities</h2>
       <table>

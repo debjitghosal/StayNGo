@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Analytics</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      /* Custom styles for the analytics page not covered in the main CSS */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .stat-card {
+        background: linear-gradient(145deg, #f9f9f9, #e6e6e6);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      }
+
+      .stat-card h3 {
+        font-size: 20px;
+        color: #555;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .stat-card .value {
+        font-size: 38px;
+        font-weight: 800;
+        color: #43a047;
+      }
+
+      .chart-container {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Admin Analytics Dashboard</h1>
+
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="flash-messages">
+        {% for message in messages %} {{ message }} {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Transaction Value</h3>
+          <p class="value">₹{{ "%.2f"|format(stats.total_transactions) }}</p>
+        </div>
+        <div class="stat-card">
+          <h3>Total Users</h3>
+          <p class="value">{{ stats.user_count }}</p>
+        </div>
+        <div class="stat-card">
+          <h3>Total Rooms Booked</h3>
+          <p class="value">{{ stats.bookings_count }}</p>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <h2 style="text-align: center; margin-bottom: 20px; color: #333">
+          Monthly Booking Trends
+        </h2>
+        <canvas id="monthlyTrendChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <h2 style="text-align: center; margin-bottom: 20px; color: #333">
+          Booking Distribution
+        </h2>
+        <canvas id="bookingDistributionChart"></canvas>
+      </div>
+
+      <a
+        href="{{ url_for('dashboard') }}"
+        class="button back-button"
+        style="display: block; width: fit-content; margin: 20px auto 0"
+        >Back to Dashboard</a
+      >
+    </div>
+
+    <script>
+      // Use the data passed from Flask to initialize the charts
+      const labels = {{ chart_labels | safe }};
+      const dataValues = {{ chart_values | safe }};
+
+      // 1. Monthly Booking Trends (Line Chart)
+      const lineChartCtx = document.getElementById('monthlyTrendChart').getContext('2d');
+      new Chart(lineChartCtx, {
+          type: 'line',
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: 'Bookings per Month',
+                  data: dataValues,
+                  borderColor: '#4caf50',
+                  backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                  fill: true,
+                  tension: 0.4, // Makes the line smooth
+                  borderWidth: 3
+              }]
+          },
+          options: {
+              responsive: true,
+              scales: {
+                  y: {
+                      beginAtZero: true,
+                      title: {
+                          display: true,
+                          text: 'Number of Bookings'
+                      }
+                  },
+                  x: {
+                      title: {
+                          display: true,
+                          text: 'Month'
+                      }
+                  }
+              }
+          }
+      });
+
+      // 2. Booking Distribution (Pie Chart)
+      const pieChartCtx = document.getElementById('bookingDistributionChart').getContext('2d');
+      new Chart(pieChartCtx, {
+          type: 'pie',
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: 'Booking Distribution',
+                  data: dataValues,
+                  backgroundColor: [ // Add more colors if you expect more months
+                      '#4CAF50', '#81C784', '#A5D6A7', '#C8E6C9',
+                      '#388E3C', '#66BB6A', '#2E7D32', '#43A047',
+                      '#1B5E20', '#A5D6A7', '#E8F5E9', '#004D40'
+                  ],
+                  hoverOffset: 4
+              }]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  legend: {
+                      position: 'top',
+                  },
+                  tooltip: {
+                      callbacks: {
+                          label: function(context) {
+                              let label = context.label || '';
+                              if (label) {
+                                  label += ': ';
+                              }
+                              if (context.parsed !== null) {
+                                  label += context.parsed;
+                              }
+                              return label + ' bookings';
+                          }
+                      }
+                  }
+              }
+          }
+      });
+    </script>
+  </body>
+</html>

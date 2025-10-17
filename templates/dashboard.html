@@ -8,6 +8,15 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css') }}"
     />
+    <style>
+      /* Simple style to space out the top action buttons */
+      .action-buttons {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -15,10 +24,17 @@
       <p>Role: {{ role }}</p>
 
       {% if role == 'admin' %}
+
       <h2>Property Listings</h2>
-      <a href="{{ url_for('add_property') }}" class="button add-property"
-        >Add New Property</a
-      >
+
+      <div class="action-buttons">
+        <a href="{{ url_for('add_property') }}" class="button add-property"
+          >Add New Property</a
+        >
+        <a href="{{ url_for('admin_analytics') }}" class="button view-analytics"
+          >View Analytics</a
+        >
+      </div>
 
       <table>
         <thead>
@@ -28,7 +44,6 @@
             <th>City</th>
             <th>State</th>
             <th>Country</th>
-
             <th>Description</th>
             <th>Image</th>
             <th>Actions</th>
@@ -42,10 +57,18 @@
             <td>{{ property.city }}</td>
             <td>{{ property.state }}</td>
             <td>{{ property.country }}</td>
-
             <td>{{ property.description }}</td>
             <td>
-              <a href="{{ property.image_url }}" target="_blank">View Image</a>
+              {% if property.image_url %}
+              <img
+                src="{{ url_for('hdfs_image_proxy', hdfs_path=property.image_url) }}"
+                alt="Property Image"
+                width="100"
+                height="80"
+                style="object-fit: cover"
+                title="Click to view full image"
+              />
+              {% else %} No Image {% endif %}
             </td>
             <td>
               <a
@@ -78,7 +101,6 @@
                 class="button room-status"
                 >View Room Status</a
               >
-
               <form
                 action="{{ url_for('delete_property', property_id=property.property_id) }}"
                 class="no-style-form"
@@ -98,6 +120,7 @@
           {% endfor %}
         </tbody>
       </table>
+
       {% else %}
       <p>You do not have access to view property listings.</p>
       {% endif %}
