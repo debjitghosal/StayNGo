@@ -4,6 +4,7 @@ StayNGo is a web-based platform designed to address the challenges faced by midd
 
 <img width="975" height="477" alt="image" src="https://github.com/user-attachments/assets/b1cab99c-68df-42ff-8142-032ac3c58ff2" />
 
+Demo Link : https://drive.google.com/file/d/1FlLA5Usdbm_GkZX6QYN4amiV3JdheuWU/view?usp=sharing
 ---
 
 ## The Problem
