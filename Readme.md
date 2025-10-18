@@ -4,9 +4,13 @@ StayNGo is a web-based platform designed to address the challenges faced by midd
 
 <img width="975" height="477" alt="image" src="https://github.com/user-attachments/assets/b1cab99c-68df-42ff-8142-032ac3c58ff2" />
 
-Demo Link : https://drive.google.com/file/d/1FlLA5Usdbm_GkZX6QYN4amiV3JdheuWU/view?usp=sharing
+---
 ---
 
+### 🎥 **Live Demo**
+👉 [Click here to watch the demo](https://drive.google.com/file/d/1FlLA5Usdbm_GkZX6QYN4amiV3JdheuWU/view?usp=sharing)
+
+---
 ## The Problem
 
 Many patients and their families travel significant distances to access quality healthcare. During the often lengthy waiting periods (5-7 days or more) for medical appointments or procedures, they require temporary lodging. However, conventional options like OYO or Trivago are often prohibitively expensive, adding a substantial financial burden to already vulnerable individuals.
